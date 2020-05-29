@@ -1,0 +1,74 @@
+/////////////////////////////////////////////////////////
+// 
+// STUFF RELATED TO THE HIGHLIGHTEABLE BUTTONS
+//
+/////////////////////////////////////////////////////////
+
+int xinit=400;
+int yinit=100;
+int step=100;
+int butwidth=200;
+int butheight=35;
+  
+/////////////////////////////////////////////////////////
+//
+/////////////////////
+void drawallhighlightbuttons() {
+  for (int i=0; i<maxhighlightbuttons;i++) myhighlightbutton[i].drawbutton();
+}
+
+
+//////////////////////////////////////////////////////////
+//
+void initializeallhighlightbuttons(){
+  for (int i=0; i<maxhighlightbuttons;i++) myhighlightbutton[i] = new highlightbuttons(xinit,yinit+step*i,butwidth,butheight,"text"+i,false,false);
+}
+
+
+//////////////////////////////////////////////////////////
+// 
+// CLASS STARTS HERE
+//
+//////////////////////////////////////////////////////////
+class highlightbuttons {
+  
+  int x;
+  int y;
+  int dx;
+  int dy;
+  String text;
+  boolean active;
+  boolean high;
+  
+  highlightbuttons(int tempx, int tempy, int tempdx, int tempdy, String temptext, boolean tempactive, boolean temphigh) {
+    x=tempx; y=tempy; dx=tempdx; dy=tempdy; text=temptext; active=tempactive; high=temphigh;}
+  
+  void drawbutton() {
+    
+    final int dark=240;
+    final int medium=200;
+    int transp=dark;
+    
+    text(text,x,y);
+    
+    if (high==true) transp=medium;
+    if (active==true) transp=0;  
+    stroke(255,255,255);  
+    fill(0,0,0,transp);  
+    rect(x,y,dx,dy,4);
+    
+  }
+  
+  void checkmouseover() {
+    high=false;
+    if (mouseX >= x && mouseX <= x+dx && 
+      mouseY >= y && mouseY <= dy) high=true;
+    println(high);
+  }
+  
+  void managemouseclick() {
+    active=false;
+    if (high==true) active=true; 
+  }
+  
+}
